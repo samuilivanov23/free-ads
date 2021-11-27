@@ -13,10 +13,23 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>FreeAds</name>
 	<description>Free Ads course work project</description>
+
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+	
 	<dependencies>
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.3.13</version>
+		</dependency>
+
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -33,6 +46,16 @@
 	  		<artifactId>postgresql</artifactId>
 	  		<version>42.2.15</version>
 		</dependency>
+
+		<dependency>
+        	<groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 	</dependencies>
 
 	<build>
