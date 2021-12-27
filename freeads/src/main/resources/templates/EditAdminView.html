@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>edit user</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    <body>
+		<h2>Edit user: [[|${user.firstName} ${user.lastName}|]]</h2>
+
+		<form action="#" th:action="@{/EditAdmin}" th:object="${user}" method="post">
+			<div class="autocomplete" style="width:300px">
+                <label for="id">First Name</label><br>
+				<input type="hidden" id="id" name="id" th:field="${user.id}"><br><br>
+            </div>
+			
+			<div class="autocomplete" style="width:300px">
+                <label for="firstName">First Name</label><br>
+				<input type="text" id="firstName" name="firstName" th:field="${user.firstName}"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+                <label for="lastName">Last Name</label><br>
+				<input type="text" id="lastName" name="lastName" th:field="${user.lastName}"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+                <label for="username">Username</label><br>
+				<input type="text" id="username" name="username" th:field="${user.username}"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+                <label for="emailAddress">Email Address</label><br>
+				<input type="text" id="emailAddress" name="emailAddress" th:field="${user.emailAddress}"><br><br>
+            </div>
+
+			<input class="button button_style" type="submit" value="Submit" name="Submit"/> <br><br>
+		 	<input class="button button_style" type="reset" value="Reset" name="Reset"> <br><br>
+    	</form>
+	</body>
+</html>
