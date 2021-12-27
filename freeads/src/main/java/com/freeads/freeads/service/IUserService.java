@@ -5,5 +5,7 @@ import java.util.List;
 
 public interface IUserService
 {
-	List<User> findAll();
+	List<User> FindAll();
+	User FindById( long id );
+	void UpdateUserData( User user );
 }

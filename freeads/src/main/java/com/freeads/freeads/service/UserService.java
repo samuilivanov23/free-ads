@@ -10,12 +10,30 @@ import org.springframework.stereotype.Service;
 public class UserService implements IUserService 
 {
 	@Autowired
-	private UserRepository repository;
+	private UserRepository userRepository;
 
 	@Override
-	public List<User> findAll() 
+	public List<User> FindAll() 
 	{
-		var users = ( List<User> ) repository.findAll();
+		var users = ( List<User> ) userRepository.findAll();
 		return users;
+	}
+	
+	@Override
+	public User FindById( long id )
+	{
+		var user = ( User ) userRepository.findById( id );
+		return user;
+	}
+
+	@Override
+	public void UpdateUserData( User user )
+	{
+		System.out.println( user.getId() + " " + user.getFirstName() + " " + user.getLastName() + " " + user.getEmailAddress() );
+		userRepository.updateUserData( user.getId(),
+									   user.getFirstName(),
+			   						   user.getLastName(),
+									   user.getUsername(),
+									   user.getEmailAddress() );
 	}
 }
