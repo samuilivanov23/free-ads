@@ -2,6 +2,7 @@ package com.freeads.freeads.controller;
 
 import com.freeads.freeads.model.User;
 import com.freeads.freeads.service.IUserService;
+import com.freeads.freeads.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +23,11 @@ public class AdminsController
 	@Autowired
 	private IUserService userService;
 
+	@Autowired
+	private ICartService cartService;
+
 	@GetMapping( "/AdminUsers" )
-	public String FindAdmins( Model model )
+	public String FindAdminUsers( Model model )
 	{
 		var adminUsers = ( List<User> ) userService.FindAll();
 		model.addAttribute( "users", adminUsers );
@@ -32,7 +36,7 @@ public class AdminsController
 	}
 
 	@GetMapping( "/EditAdminUser" )
-	public String EditAdmin( @RequestParam long id, Model model )
+	public String EditAdminUser( @RequestParam long id, Model model )
 	{
 		try
 		{
@@ -49,31 +53,48 @@ public class AdminsController
 	}
 
 	@PostMapping( "/EditAdminUser" )
-	public String EditAdminSubmission( @ModelAttribute User adminUser, Model model )
+	public String EditAdminUserSubmission( @ModelAttribute User adminUser )
 	{
 		try
 		{
-			userService.UpdateAdminUserData( adminUser );
+			userService.UpdateAdminUser( adminUser );
 		}
-		catch( Exception exception )
-		{
-			exception.printStackTrace();
-		}
+		catch( Exception exception ) { exception.printStackTrace(); }
 
 		return "redirect:AdminUsers";
 	}
 
 	@GetMapping( "/DeleteAdminUser" )
-	public String DeleteAdmin( @RequestParam long id )
+	public String DeleteAdminUser( @RequestParam long id )
 	{
 		try
 		{
 			userService.DeleteAdminUser( id );
 		}
-		catch( Exception exception )
+		catch( Exception exception ) { exception.printStackTrace(); }
+
+		return "redirect:AdminUsers";
+	}
+
+	@GetMapping( "/InsertAdminUser" )
+	public String InsertAdminUser()
+	{
+		return "InsertAdminUserView";
+	}
+
+	@PostMapping( "/InsertAdminUser" )
+	public String InsertAdminUserSubmission( @ModelAttribute User adminUser )
+	{
+		try
 		{
-			exception.printStackTrace();
+			adminUser.setCartId( cartService.InsertCart() );
+			long adminUserId = userService.InsertAdminUser( adminUser );
 		}
+		catch( Exception exception ) 
+		{ 
+			exception.printStackTrace();
+			return "redirect:AdminUsers";
+	   	}
 
 		return "redirect:AdminUsers";
 	}

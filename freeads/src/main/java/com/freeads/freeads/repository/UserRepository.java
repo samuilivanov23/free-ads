@@ -15,11 +15,11 @@ public interface UserRepository extends CrudRepository<User, Long>
 		value="UPDATE users SET first_name=:firstName, last_name=:lastName, username=:username, email_address=:emailAddress where id=:id",
 		nativeQuery=true	
 	)
-	void updateAdminUserData( @Param( value="id" ) long id,
-						 @Param( value="firstName" ) String firstName,
-						 @Param( value="lastName" ) String lastName,
-						 @Param( value="username" ) String username,
-						 @Param( value="emailAddress" ) String emailAddress );
+	void updateAdminUser( @Param( value="id" ) long id,
+						  @Param( value="firstName" ) String firstName,
+						  @Param( value="lastName" ) String lastName,
+						  @Param( value="username" ) String username,
+						  @Param( value="emailAddress" ) String emailAddress );
 
 	@Query(
 		value="SELECT * FROM users as u WHERE u.id=:id",

@@ -7,6 +7,7 @@ public interface IUserService
 {
 	List<User> FindAll();
 	User FindAdminById( long id );
-	void UpdateAdminUserData( User user );
+	long InsertAdminUser( User adminUser );
+	void UpdateAdminUser( User adminUser );
 	void DeleteAdminUser( long id );
 }

@@ -8,7 +8,12 @@
     </head>
     
     <body>
-        <h2>List of users</h2>
+        <h2 class="center_text">List of users</h2>
+
+		<a th:href="@{InsertAdminUser}">
+			<button class="button button_style" name="CreateAdminUser"/> Create Admin User </button>
+		</a>
+		<br><br>
 
         <table id="customers">
 			<thead>
@@ -36,6 +41,6 @@
 					<td><a th:href="@{DeleteAdminUser?id={id}(id=${user.id})}"><img class="edit_image" th:src="@{/images/delete.png}"></a></td>
 				</tr>
 			</tbody>
-        </table>
+        </table>	
 	</body>
 </html>

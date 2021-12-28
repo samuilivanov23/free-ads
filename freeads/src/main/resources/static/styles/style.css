@@ -78,3 +78,8 @@ input[type=text]
 #customers td {
 	text-align: center;
 }
+
+.center_text
+{
+	text-align: center;
+}
