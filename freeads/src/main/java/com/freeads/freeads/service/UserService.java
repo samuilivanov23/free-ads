@@ -20,20 +20,25 @@ public class UserService implements IUserService
 	}
 	
 	@Override
-	public User FindById( long id )
+	public User FindAdminById( long id )
 	{
-		var user = ( User ) userRepository.findById( id );
+		var user = ( User ) userRepository.findAdminById( id );
 		return user;
 	}
 
 	@Override
-	public void UpdateUserData( User user )
+	public void UpdateAdminUserData( User user )
 	{
-		System.out.println( user.getId() + " " + user.getFirstName() + " " + user.getLastName() + " " + user.getEmailAddress() );
-		userRepository.updateUserData( user.getId(),
+		userRepository.updateAdminUserData( user.getId(),
 									   user.getFirstName(),
 			   						   user.getLastName(),
 									   user.getUsername(),
 									   user.getEmailAddress() );
+	}
+
+	@Override
+	public void DeleteAdminUser( long id )
+	{
+		userRepository.deleteAdminUser( id );
 	}
 }

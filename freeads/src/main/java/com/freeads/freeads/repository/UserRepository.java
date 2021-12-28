@@ -15,7 +15,7 @@ public interface UserRepository extends CrudRepository<User, Long>
 		value="UPDATE users SET first_name=:firstName, last_name=:lastName, username=:username, email_address=:emailAddress where id=:id",
 		nativeQuery=true	
 	)
-	void updateUserData( @Param( value="id" ) long id,
+	void updateAdminUserData( @Param( value="id" ) long id,
 						 @Param( value="firstName" ) String firstName,
 						 @Param( value="lastName" ) String lastName,
 						 @Param( value="username" ) String username,
@@ -25,5 +25,12 @@ public interface UserRepository extends CrudRepository<User, Long>
 		value="SELECT * FROM users as u WHERE u.id=:id",
 		nativeQuery=true
 	)
-	User findById( @Param( value="id" ) long id );
+	User findAdminById( @Param( value="id" ) long id );
+
+	@Modifying
+	@Query(
+		value="DELETE FROM users WHERE id=:id",
+		nativeQuery=true
+	)
+	void deleteAdminUser( @Param( value="id" ) long id );
 }

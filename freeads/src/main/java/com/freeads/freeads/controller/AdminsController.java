@@ -22,47 +22,59 @@ public class AdminsController
 	@Autowired
 	private IUserService userService;
 
-	@GetMapping( "/Administrators" )
+	@GetMapping( "/AdminUsers" )
 	public String FindAdmins( Model model )
 	{
-		var users = ( List<User> ) userService.FindAll();
-		model.addAttribute( "users", users );
+		var adminUsers = ( List<User> ) userService.FindAll();
+		model.addAttribute( "users", adminUsers );
 		
-		return "ShowAdminsView";
+		return "ShowAdminUsersView";
 	}
 
-	@GetMapping( "/EditAdmin" )
+	@GetMapping( "/EditAdminUser" )
 	public String EditAdmin( @RequestParam long id, Model model )
 	{
 		try
 		{
-			User user = ( User ) userService.FindById( id );
-			System.out.println( user.getFirstName() );
-			model.addAttribute( "user", user );
+			User adminUser = ( User ) userService.FindAdminById( id );
+			model.addAttribute( "user", adminUser );
 		}
 		catch(Exception exception)
 		{
 			exception.printStackTrace();
-			try
-			{
-				return "redirect:Administrators";
-			}
-			catch(Exception ex)
-			{
-				ex.printStackTrace();
-			}
+			return "redirect:AdminUsers";
 		}
 
-		return "EditAdminView";
+		return "EditAdminUserView";
 	}
 
-	@PostMapping( "/EditAdmin" )
-	public String EditAdminSubmission( @ModelAttribute User user, Model model )
+	@PostMapping( "/EditAdminUser" )
+	public String EditAdminSubmission( @ModelAttribute User adminUser, Model model )
 	{
-		//TODO save to database
-		System.out.println( user.getFirstName() + " " + user.getEmailAddress() );
-		userService.UpdateUserData( user );
-		
-		return "redirect:Administrators";
+		try
+		{
+			userService.UpdateAdminUserData( adminUser );
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+
+		return "redirect:AdminUsers";
+	}
+
+	@GetMapping( "/DeleteAdminUser" )
+	public String DeleteAdmin( @RequestParam long id )
+	{
+		try
+		{
+			userService.DeleteAdminUser( id );
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+
+		return "redirect:AdminUsers";
 	}
 }
