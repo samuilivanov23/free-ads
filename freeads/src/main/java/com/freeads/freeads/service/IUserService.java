@@ -6,6 +6,8 @@ import java.util.List;
 public interface IUserService
 {
 	List<User> FindAll();
-	User FindById( long id );
-	void UpdateUserData( User user );
+	User FindAdminById( long id );
+	long InsertAdminUser( User adminUser );
+	void UpdateAdminUser( User adminUser );
+	void DeleteAdminUser( long id );
 }

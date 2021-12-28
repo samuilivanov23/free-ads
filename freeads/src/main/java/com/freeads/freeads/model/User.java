@@ -64,7 +64,7 @@ public class User
 
 	public String getPassword() { return this.password; }
 	public void setPassword( String password ) { this.password = password; }
-	
+
 	public boolean getAuthenticated() { return this.authenticated; }
 	public void setAuthenticated( boolean authenticated ) { this.authenticated = authenticated; }
 	
@@ -118,6 +118,7 @@ public class User
 						  ", firstName:" + this.getFirstName() +
 						  ", lastName:" + this.getLastName() +
 						  ", authenticated" + this.getAuthenticated() + 
-						  ", cartId:" + this.getCartId(); 
+						  ", cartId:" + this.getCartId() +
+						  " ]"; 
 	}
 }
