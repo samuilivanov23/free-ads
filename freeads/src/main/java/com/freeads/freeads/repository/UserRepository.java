@@ -72,6 +72,7 @@ public class UserRepository
 			
 			result = statement.executeQuery();
 			result.next();
+
 			adminUser = new User();
 			adminUser.setId( result.getLong( 1 ) );
 			adminUser.setInsertedAt( result.getString( 2 ) );
