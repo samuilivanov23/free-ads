@@ -5,7 +5,6 @@ import com.freeads.freeads.repository.CartRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.freeads.freeads.DataBaseManager;
 
 @Service
 public class CartService implements ICartService
