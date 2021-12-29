@@ -14,7 +14,6 @@ public class FreeAdsApplication
 	public static void main( String[] args ) 
 	{
 		SpringApplication.run( FreeAdsApplication.class, args );
-		DataBaseManager.ConnectToDatabase();
 	}
 
 	@Bean
