@@ -23,6 +23,7 @@ public class User
 	private String password;
 	private boolean authenticated;
 	private long cartId;
+	private long roleId;
 
 	public User() {};
 
@@ -42,6 +43,7 @@ public class User
 		this.emailAddress = emailAddress;
 		this.authenticated = false;
 		this.cartId = -1;
+		this.roleId = -1;
 	}
 
 	public long getId() { return this.id; }
@@ -70,6 +72,9 @@ public class User
 	
 	public long getCartId() { return this.cartId; }
 	public void setCartId( long cartId ) { this.cartId = cartId; }
+
+	public long getRoleId() { return this.roleId; }
+	public void setRoleId( long roleId ) { this.roleId = roleId; }
 
 	@Override
 	public int hashCode() 
@@ -119,6 +124,7 @@ public class User
 						  ", lastName:" + this.getLastName() +
 						  ", authenticated" + this.getAuthenticated() + 
 						  ", cartId:" + this.getCartId() +
+						  ", roleId:" + this.getRoleId() +
 						  " ]"; 
 	}
 }

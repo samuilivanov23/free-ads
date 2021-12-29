@@ -78,13 +78,6 @@ public class DataBaseManager
 					Class.forName(dbDriverClass);
 
 					Connection dbConn = DriverManager.getConnection(dbConnUrl, dbUserName, dbPassword);
-					DatabaseMetaData dbMetaData = dbConn.getMetaData();
-					String dbName = dbMetaData.getDatabaseProductName();
-					String dbVersion = dbMetaData.getDatabaseProductVersion();
-
-					System.out.println("Database Name : " + dbName);
-					System.out.println("Database Version : " + dbVersion);
-					
 					return dbConn;
 				}
 			}
@@ -108,7 +101,7 @@ public class DataBaseManager
 	{
 		try
 		{
-			result.close();
+			if( result != null ) { result.close(); }
 		}
 		catch( Exception resultException )
 		{
@@ -117,7 +110,7 @@ public class DataBaseManager
 
 		try
 		{
-			statement.close();
+			if( statement != null ) { statement.close(); }
 		}
 		catch( Exception stException )
 		{
@@ -126,7 +119,7 @@ public class DataBaseManager
 
 		try
 		{
-			dbConn.close();
+			if( dbConn != null ) { dbConn.close(); }
 		}
 		catch( Exception dbConnException )
 		{
