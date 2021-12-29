@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.apache.commons.codec.digest.DigestUtils;
 
 @Service
 public class UserService implements IUserService 
@@ -40,6 +41,12 @@ public class UserService implements IUserService
 	@Override 
 	public long InsertAdminUser( User adminUser )
 	{
-		return userRepository.inserrtAdminUser( adminUser );
+		return userRepository.insertAdminUser( adminUser );
+	}
+
+	//User Operations methods
+	public static String GetEncryptedPassword( String password )
+	{
+		return DigestUtils.sha256Hex( password );
 	}
 }

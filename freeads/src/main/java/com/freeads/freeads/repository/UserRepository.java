@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import com.freeads.freeads.DataBaseManager;
+import com.freeads.freeads.service.UserService;
 
 @Repository
 public class UserRepository 
@@ -146,7 +147,7 @@ public class UserRepository
 		}
 	}
 
-	public long inserrtAdminUser( User adminUser )
+	public long insertAdminUser( User adminUser )
 	{
 		long adminUserId = -1;
 		PreparedStatement statement = null;
@@ -154,13 +155,13 @@ public class UserRepository
 		Connection dbConn = DataBaseManager.ConnectToDatabase2();
 		
 		try
-		{	
+		{
 			statement = dbConn.prepareStatement( "INSERT INTO users(first_name, last_name, username, email_address, password, cart_id, role_id) values(?, ?, ?, ?, ?, ?, ?) RETURNING id" );
 			statement.setString( 1, adminUser.getFirstName() );
 			statement.setString( 2, adminUser.getLastName() );
 			statement.setString( 3, adminUser.getUsername() );
 			statement.setString( 4, adminUser.getEmailAddress() );
-			statement.setString( 5, adminUser.getPassword() );
+			statement.setString( 5, UserService.GetEncryptedPassword( adminUser.getPassword() ) );
 			statement.setLong( 6, adminUser.getCartId() );
 			statement.setLong( 7, ADMIN_ROLE_ID );
 			
