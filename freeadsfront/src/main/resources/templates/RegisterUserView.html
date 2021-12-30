@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Create user</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	</head>
+    
+    <body>
+		<h2 class="center_text">Register</h2>
+
+		<form action="#" id="RegisterUserForm" th:action="@{/RegisterUser}" th:object="${user}" method="post">			
+			<div class="autocomplete" style="width:300px">
+                <label for="firstName">First Name</label><br>
+				<input type="text" id="firstName" name="firstName"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+                <label for="lastName">Last Name</label><br>
+				<input type="text" id="lastName" name="lastName"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+                <label for="username">Username</label><br>
+				<input type="text" id="username" name="username"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+                <label for="emailAddress">Email Address</label><br>
+				<input type="text" id="emailAddress" name="emailAddress"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+				<label for="password">Password</label><br>
+				<input type="password" id="password" name="password">
+				<i class="far fa-eye toggle_password_position" id="togglePassword"></i> <br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+				<label for="confirmPassword">Confirm Password</label><br>
+				<input type="password" id="confirmPassword" name="confirmPassword">
+				<i class="far fa-eye toggle_password_position" id="toggleConfirmPassword"></i> <br><br>
+			</div>
+
+			<input class="button button_style" type="submit" value="Submit" name="Submit"/> <br><br>
+		 	<input class="button button_style" type="reset" value="Reset" name="Reset"> <br><br>
+    	</form>
+
+		<script th:inline="javascript">
+			$('#RegisterUserForm').submit( function( e ){
+				e.preventDefault();
+				let form_data = $( 'form' ).serializeArray();
+				console.log( form_data );
+				alert( "Check your email for verification link" );
+
+				if( form_data[4]['value'] === form_data[5]['value'] ){ // password = confirm_password
+					$.ajax({
+						type: $( RegisterUserForm ).attr( 'method' ),
+						url: [[@{'/RegisterUser'}]],
+						data: form_data,
+						success: function( response ){
+							console.log( response );
+							if( response ){
+								alert( "Email Vefification is successfull" );
+							}
+							else{
+								alert( "Email Verification Went Wrong" );
+							}
+							window.location = '/';
+						}
+					})
+				}
+				else{
+					alert( "Passwords does not match!" );
+				}
+			} )
+		</script>
+
+		<script th:inline="javascript">
+			const togglePassword = document.querySelector( '#togglePassword' );
+			const password = document.querySelector( '#password' )
+			
+			const toggleConfirmPassword = document.querySelector( '#toggleConfirmPassword' );
+			const confirmPassword = document.querySelector( '#confirmPassword' );
+
+			togglePassword.addEventListener( 'click', function( e ){
+				const type = password.getAttribute( 'type' ) === 'password' ? 'text' : 'password';
+				password.setAttribute( 'type', type );
+			} );
+
+			toggleConfirmPassword.addEventListener( 'click', function( e ){
+				const type = confirmPassword.getAttribute( 'type' ) === 'password' ? 'text' : 'password';
+				confirmPassword.setAttribute( 'type', type );
+			} );
+		</script>
+	</body>
+</html>

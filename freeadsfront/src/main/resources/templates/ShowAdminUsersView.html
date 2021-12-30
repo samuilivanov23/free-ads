@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>users</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    <body>
+        <h2 class="center_text">List of users</h2>
+
+		<a th:href="@{InsertAdminUser}">
+			<button class="button button_style" name="CreateAdminUser"/> Create Admin User </button>
+		</a>
+		<br><br>
+
+        <table id="customers">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Username</th>
+					<th>Email Address</th>
+					<th>Cart Id</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.id}"></td>
+					<td th:text="${user.firstName}"></td>
+					<td th:text="${user.lastName}"></td>
+					<td th:text="${user.username}"></td>
+					<td th:text="${user.emailAddress}"></td>
+					<td th:text="${user.cartId}"></td>
+					<td><a th:href="@{EditAdminUser?id={id}(id=${user.id})}"><img class="edit_image" th:src="@{/images/edit.png}"></a></td>
+					<td><a th:href="@{DeleteAdminUser?id={id}(id=${user.id})}"><img class="edit_image" th:src="@{/images/delete.png}"></a></td>
+				</tr>
+			</tbody>
+        </table>	
+	</body>
+</html>

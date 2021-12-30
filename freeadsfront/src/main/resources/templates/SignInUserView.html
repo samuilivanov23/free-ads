@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Create user</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	</head>
+    
+    <body>
+		<h2 class="center_text">Sign in</h2>
+
+		<form action="#" id="SignInUserForm" th:action="@{/SignInUser}" th:object="${user}" method="post">			
+			<div class="autocomplete" style="width:300px">
+                <label for="username">Username</label><br>
+				<input type="text" id="username" name="username"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+				<label for="password">Password</label><br>
+				<input type="password" id="password" name="password">
+				<i class="far fa-eye toggle_password_position" id="togglePassword"></i> <br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+				<label for="confirmPassword">Confirm Password</label><br>
+				<input type="password" id="confirmPassword" name="confirmPassword">
+				<i class="far fa-eye toggle_password_position" id="toggleConfirmPassword"></i> <br><br>
+			</div>
+
+			<input class="button button_style" type="submit" value="Submit" name="Submit"/> <br><br>
+		 	<input class="button button_style" type="reset" value="Reset" name="Reset"> <br><br>
+    	</form>
+
+		<script th:inline="javascript">
+			$('#SignInUserForm').submit( function( e ){
+				e.preventDefault();
+				let form_data = $( 'form' ).serializeArray();
+				console.log( form_data );
+				
+				if( form_data[1]['value'] === form_data[2]['value'] ){ // password = confirm_password
+					$.ajax({
+						type: $( SignInUserForm ).attr( 'method' ),
+						url: [[@{'/SignInUser'}]],
+						data: form_data,
+						success: function( response ){
+							window.location = '/';
+						}
+					})
+				}
+				else{
+					alert( "Passwords does not match!" );
+				}
+			} )
+		</script>
+
+		<script th:inline="javascript">
+			const togglePassword = document.querySelector( '#togglePassword' );
+			const password = document.querySelector( '#password' )
+			
+			const toggleConfirmPassword = document.querySelector( '#toggleConfirmPassword' );
+			const confirmPassword = document.querySelector( '#confirmPassword' );
+
+			togglePassword.addEventListener( 'click', function( e ){
+				const type = password.getAttribute( 'type' ) === 'password' ? 'text' : 'password';
+				password.setAttribute( 'type', type );
+			} );
+
+			toggleConfirmPassword.addEventListener( 'click', function( e ){
+				const type = confirmPassword.getAttribute( 'type' ) === 'password' ? 'text' : 'password';
+				confirmPassword.setAttribute( 'type', type );
+			} );
+		</script>
+	</body>
+</html>
