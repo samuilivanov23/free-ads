@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Create category</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+    
+    <body>
+		<h2 class="center_text">Create Category</h2>
+
+		<form action="#" id="InsertCategoryForm" th:action="@{/InsertCategory}" th:object="${category}" method="post">			
+			<div class="autocomplete" style="width:300px">
+                <label for="name">Name</label><br>
+				<input type="text" id="name" name="name"><br><br>
+            </div>
+
+			<input class="button button_style" type="submit" value="Submit" name="Submit"/> <br><br>
+		 	<input class="button button_style" type="reset" value="Reset" name="Reset"> <br><br>
+    	</form>
+	</body>
+</html>
