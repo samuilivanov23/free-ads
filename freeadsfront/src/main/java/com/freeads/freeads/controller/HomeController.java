@@ -1,8 +1,10 @@
 package com.freeads.freeads.controller;
 
 import com.freeads.freeads.model.User;
+import com.freeads.freeads.model.Item;
 import com.freeads.freeads.service.IUserService;
 import com.freeads.freeads.service.ICartService;
+import com.freeads.freeads.service.IItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +19,25 @@ import java.util.List;
 @Controller
 public class HomeController 
 {
+	@Autowired 
+	private IItemService itemService;
+	
 	public static User loggedInUser = null;
 
 	@GetMapping( "/" )
-	public String FindAdminUsers( Model model )
+	public String Index( Model model )
 	{
-		model.addAttribute( "loggedInUser", loggedInUser );
+		try
+		{
+			List<Item> items = itemService.FindAllItems();	
+			model.addAttribute( "loggedInUser", loggedInUser );
+			model.addAttribute( "items", items );
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+			
 		return "index";
 	}
 }

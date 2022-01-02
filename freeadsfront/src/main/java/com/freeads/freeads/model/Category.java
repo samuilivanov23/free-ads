@@ -60,7 +60,7 @@ public class Category
 
 		final Category otherCategory = ( Category ) obj;
 
-		if( !( this.id == otherCategory.id ) )
+		if( !( this.id == otherCategory.getId() ) )
 		{
 			return false;
 		}
@@ -70,7 +70,7 @@ public class Category
 			return false;
 		}
 
-		return Objects.equals(this.id, otherCategory.id);
+		return Objects.equals( this.id, otherCategory.id );
 	}
 
 	@Override

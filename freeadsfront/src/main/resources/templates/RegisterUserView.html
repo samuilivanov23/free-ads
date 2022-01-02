@@ -3,6 +3,7 @@
     <head>
         <title>Create user</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/nav.css}">
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
    		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
@@ -10,6 +11,8 @@
 	</head>
     
     <body>
+		<div th:replace="fragments/navbar :: navbar"></div>
+
 		<h2 class="center_text">Register</h2>
 
 		<form action="#" id="RegisterUserForm" th:action="@{/RegisterUser}" th:object="${user}" method="post">			
@@ -53,7 +56,6 @@
 			$('#RegisterUserForm').submit( function( e ){
 				e.preventDefault();
 				let form_data = $( 'form' ).serializeArray();
-				console.log( form_data );
 				alert( "Check your email for verification link" );
 
 				if( form_data[4]['value'] === form_data[5]['value'] ){ // password = confirm_password

@@ -3,6 +3,8 @@
     <head>
         <title>Home page</title>
 		<link rel="stylesheet" type="text/css" href="styles/style.css">
+		<link rel="stylesheet" type="text/css" href="styles/nav.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">	
 	</head>
@@ -10,77 +12,126 @@
 		<div th:replace="fragments/navbar :: navbar"></div>
 
 		<div class="row">
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="images/camera_images/camera1.jpg" alt="Avatar" style="width:100%">
-			  <h3>Card 1</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
+			<div th:each="item : ${items}" class="column">
+				<div class="card">
+					<img class="card_image" th:src="@{/images/camera_images/{imageName}(imageName=${item.imageName})}" alt="Avatar" style="width:100%">
+					<h3>[[|${item.name}|]]</h3>
+					<p>[[|${item.description}|]]</p>
+					<p>[[|${item.price}|]] lv.</p>
+					<div>
+						<div class="favourites_image" style="float:left" title="Add to favourites">
+							<img th:if="${loggedInUser == null}" th:onclick="|AddToFavourites(${item.id}, ${loggedInUser})|" class="edit_image" th:src="@{/images/favourites.jpg}">
+							<img th:if="${loggedInUser != null}" th:onclick="|AddToFavourites(${item.id}, ${loggedInUser.id})|" class="edit_image" th:src="@{/images/favourites.jpg}">
+						</div>
+						
+						<div class="favourites_image" style="float:left" title="Remove from favourites">
+							<img th:if="${loggedInUser == null}" th:onclick="|RemoveFromFavourites(${item.id}, ${loggedInUser})|" class="edit_image" th:src="@{/images/removefavs.png}">
+							<img th:if="${loggedInUser != null}" th:onclick="|RemoveFromFavourites(${item.id}, ${loggedInUser.id})|" class="edit_image" th:src="@{/images/removefavs.png}">
+						</div>
+					</div>
 
-		  <div class="column">
-			<div class="card">
-				<img class="card_image" src="images/camera_images/camera2.jpg" alt="Avatar" style="width:100%">
-			  <h3>Card 2</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
+					<div>
+						<div class="favourites_image" style="float:right" title="Edit Item">
+							<img th:if="${loggedInUser == null}" th:onclick="|DeleteEditItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser}, 'EditItem')|" class="edit_image" th:src="@{/images/edit.png}">
+							<img th:if="${loggedInUser != null}" th:onclick="|DeleteEditItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser.id}, 'EditItem')|" class="edit_image" th:src="@{/images/edit.png}">
+						</div>
+						
+						<div class="favourites_image" style="float:right" title="Delete item">
+							<img th:if="${loggedInUser == null}" th:onclick="|DeleteEditItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser}, 'DeleteItem')|" class="edit_image" th:src="@{/images/delete.png}">
+							<img th:if="${loggedInUser != null}" th:onclick="|DeleteEditItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser.id}, 'DeleteItem' )|" class="edit_image" th:src="@{/images/delete.png}">
+						</div>
+					</div>
+					
+					<input th:if="${loggedInUser} != null AND ${loggedInUser.id} == ${item.salesmanUserId}" class="button button_style" type="submit" value="Add To Cart" name="AddToCart" th:onclick="|AddToCart(${item.id})|"/> <br><br>
+					<input th:if="${loggedInUser} != null AND ${loggedInUser.id} == ${item.salesmanUserId}" class="button button_style" type="submit" value="Deactivate Ad" name="DeactivateAd" th:onclick="|DeactivateItem(${item.id})|"/> <br><br>
+				</div>
 			</div>
-		  </div>
-		  
-		  <div class="column">
-			<div class="card">
-				<img class="card_image" src="images/camera_images/camera3.jpg" alt="Avatar" style="width:100%">
-			  <h3>Card 3</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
-		  
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="img_avatar2.png" alt="Avatar" style="width:100%">
-			  <h3>Card 4</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
-		  
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="img_avatar2.png" alt="Avatar" style="width:100%">
-			  <h3>Card 1</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
-
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="img_avatar2.png" alt="Avatar" style="width:100%">
-			  <h3>Card 2</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
-		  
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="img_avatar2.png" alt="Avatar" style="width:100%">
-			  <h3>Card 3</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
-		  
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="img_avatar2.png" alt="Avatar" style="width:100%">
-			  <h3>Card 4</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
 		</div>
+
+		<script th:inline="javascript">
+			const AddToFavourites = ( itemId, loggedInUser ) => {
+				if( loggedInUser ){
+					$.ajax({
+						type: 'GET',
+						url: "http://192.168.87.141:9779/AddToFavourites?id="+itemId,
+						success: function( response ){
+							if( response ){
+								alert('Added to favourites');
+							}
+							else{
+								alert( 'Could not add item to favourites' );
+							}
+						}
+					})
+				}
+				else{
+					alert( 'Please log in first' );
+				}
+			}
+
+			const RemoveFromFavourites = ( itemId, loggedInUser ) => {
+				if( loggedInUser ){
+					$.ajax({
+						type: 'GET',
+						url: "http://192.168.87.141:9779/RemoveFromFavourites?id="+itemId,
+						success: function( response ){
+							if( response ){
+								alert('Removed from favourites');
+							}
+							else{
+								alert( 'Could not remove item to favourites' );
+							}
+						}
+					})
+				}
+				else{
+					alert( 'Please log in first' );
+				}
+			}
+
+			const DeleteEditItem = ( itemId, itemSalesmanUserId, loggedInUserId, controllerMethod ) => {
+				if( loggedInUserId ){
+					if( loggedInUserId === itemSalesmanUserId ){
+						const endPoint = "http://192.168.87.141:9779/"+controllerMethod+"?id="+itemId;
+						$.ajax({
+							type: 'GET',
+							url: endPoint,
+							success: function( response ){
+								if( response ){
+									alert( "Product add edited/deleted successfully" );
+								}
+								else{
+									alert( "Could not edit/delete Product Ad" );
+								}
+								window.location = "/";
+							}
+						})
+					}
+					else{
+						alert( "Cannot edit or delete this Product Ad. It's owned by another customer" );
+					}
+				}
+				else{
+					alert( "Please log in first" );
+				}
+			}
+
+			const DeactivateItem = ( itemId ) => {
+				const endPoint = "http://192.168.87.141:9779/DeactivateItem"+"?id="+itemId;
+				$.ajax({
+					type: 'GET',
+					url: endPoint,
+					success: function( response ){
+						if( response ){
+							alert( "Product add edited/deleted successfully" );
+						}
+						else{
+							alert( "Could not deactivate Product Ad" );
+						}
+						window.location = "/";
+					}
+				})
+			}
+		</script>
 	</body>
 </html>

@@ -84,10 +84,10 @@ body {
   background-color: #111;
 }
 
-.favourites_image:hover:after {
+.favourites_image:hover {
     position: absolute;
     content: attr(title);
-    display: block;
+    display: inline-block;
     left: 0px;
     top: 0px;
     padding: 5px;

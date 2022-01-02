@@ -29,7 +29,6 @@ public class UsersController
 	@Autowired
 	private IEmailService emailService;
 
-
 	/*@GetMapping( "/AdminUsers" )
 	public String FindAdminUsers( Model model )
 	{
@@ -140,5 +139,12 @@ public class UsersController
 
 		//TODO return basic template for successfull verification
 		return isVerificationSuccessfull;
+	}
+
+	@GetMapping( "/LogoutUser" )
+	public String LogoutUser()
+	{
+		HomeController.loggedInUser = null;
+		return "redirect:";
 	}
 }
