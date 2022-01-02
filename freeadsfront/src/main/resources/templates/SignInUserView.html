@@ -3,6 +3,7 @@
     <head>
         <title>Create user</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/nav.css}">
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
    		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
@@ -10,6 +11,8 @@
 	</head>
     
     <body>
+		<div th:replace="fragments/navbar :: navbar"></div>
+
 		<h2 class="center_text">Sign in</h2>
 
 		<form action="#" id="SignInUserForm" th:action="@{/SignInUser}" th:object="${user}" method="post">			

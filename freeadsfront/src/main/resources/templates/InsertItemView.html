@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Create item</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/nav.css}">
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	</head>
+    
+    <body>
+		<div th:replace="fragments/navbar :: navbar"></div>
+
+		<h2 class="center_text">Create product ad</h2>
+
+		<form action="#" id="simpleId" th:object="${item}" method="post" enctype="multipart/form-data">			
+			<div class="autocomplete" style="width:300px">
+                <label for="name">Name</label><br>
+				<input type="text" id="name" name="name"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+                <label for="description">Description</label><br>
+				<input type="text" id="description" name="description"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+				<label for="categoryId">Choose a category:</label><br>
+				<select id="categoryId" name="categoryId">
+					<option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+				</select><br><br>
+			</div>
+	
+			<div class="autocomplete" style="width:300px">
+				<label for="count">Quantity</label><br>
+				<input type="number" id="count" name="count" min="1"><br><br>
+			</div>
+				
+			<div class="autocomplete" style="width:300px">
+                <label for="price">Price</label><br>
+				<input type="text" id="price" name="price"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+				<label>Upload image: </label><br>
+				<input type="file" name="image" accept="image/png, image/jpeg" /><br><br>
+			</div>
+				
+			<input class="button button_style" type="submit" value="Submit" name="Submit"/> <br><br>
+		 	<input class="button button_style" type="reset" value="Reset" name="Reset"> <br><br>
+    	</form>
+
+		<script th:inline="javascript">
+			$('#simpleId').submit( function( e ){
+				e.preventDefault();
+				let form_data = $( 'form' ).serializeArray();
+				alert( "Check your email for verification link" );
+
+				$.ajax({
+					type: $( simpleId ).attr( 'method' ),
+					url: [[@{'/AddItem'}]],
+					data: form_data,
+					success: function( response ){
+						console.log( response );
+						if( response ){
+							alert( "Product Ad created." );
+						}
+						else{
+							alert( "Could not create Product Ad." );
+						}
+						window.location = '/';
+					}
+				})
+				else{
+					alert( "Passwords does not match!" );
+				}
+			} )
+		</script>
+	</body>
+</html>

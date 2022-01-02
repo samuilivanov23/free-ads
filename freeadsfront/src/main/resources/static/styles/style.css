@@ -87,7 +87,7 @@ body {
 .favourites_image:hover:after {
     position: absolute;
     content: attr(title);
-    display: inline-block;
+    display: block;
     left: 0px;
     top: 0px;
     padding: 5px;
