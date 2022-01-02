@@ -102,17 +102,17 @@ public class User
 
 		final User otherUser = ( User ) obj;
 
-		if( !this.username.equals( otherUser.username ) )
+		if( !this.username.equals( otherUser.getUsername() ) )
 		{
 			return false;
 		}
 
-		if( !Objects.equals( this.username, otherUser.username ) )
+		if( !Objects.equals( this.username, otherUser.getUsername() ) )
 		{
 			return false;
 		}
 
-		return Objects.equals(this.id, otherUser.id);
+		return Objects.equals( this.id, otherUser.id );
 	}
 
 	@Override

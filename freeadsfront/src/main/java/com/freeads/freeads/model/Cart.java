@@ -54,17 +54,17 @@ public class Cart
 
 		final Cart otherCart = ( Cart ) obj;
 
-		if( !( this.id == otherCart.id ) )
+		if( !( this.id == otherCart.getId() ) )
 		{
 			return false;
 		}
 
-		if( !Objects.equals( this.id, otherCart.id) )
+		if( !Objects.equals( this.id, otherCart.getId() ) )
 		{
 			return false;
 		}
 
-		return Objects.equals(this.id, otherCart.id);
+		return Objects.equals( this.id, otherCart.getId() );
 	}
 
 	@Override

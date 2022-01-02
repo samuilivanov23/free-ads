@@ -84,7 +84,7 @@ body {
   background-color: #111;
 }
 
-.favourites_image:hover:after {
+.favourites_image:hover {
     position: absolute;
     content: attr(title);
     display: inline-block;

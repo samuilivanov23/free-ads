@@ -5,6 +5,7 @@ import com.freeads.freeads.model.Item;
 import com.freeads.freeads.service.IUserService;
 import com.freeads.freeads.service.ICartService;
 import com.freeads.freeads.service.IItemService;
+import com.freeads.freeads.controller.HomeController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,27 +18,28 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Controller
-public class HomeController 
+public class ItemsController 
 {
 	@Autowired 
 	private IItemService itemService;
 	
 	public static User loggedInUser = null;
 
-	@GetMapping( "/" )
-	public String Index( Model model )
+	@GetMapping( "/AddToFavourites" )
+	@ResponseBody
+	public boolean AddToFavourites( @RequestParam(name = "id") long itemId )
 	{
+		boolean isItemAddedToFavourites = false;
+
 		try
 		{
-			List<Item> items = itemService.FindAllItems();	
-			model.addAttribute( "loggedInUser", loggedInUser );
-			model.addAttribute( "items", items );
+			isItemAddedToFavourites = itemService.AddToFavourites( HomeController.loggedInUser.getId(), itemId );
 		}
 		catch( Exception exception )
 		{
 			exception.printStackTrace();
 		}
-			
-		return "index";
+		
+		return isItemAddedToFavourites;	
 	}
 }

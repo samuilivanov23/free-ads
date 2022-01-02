@@ -3,6 +3,8 @@
     <head>
         <title>Home page</title>
 		<link rel="stylesheet" type="text/css" href="styles/style.css">
+		<link rel="stylesheet" type="text/css" href="styles/nav.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">	
 	</head>
@@ -10,77 +12,42 @@
 		<div th:replace="fragments/navbar :: navbar"></div>
 
 		<div class="row">
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="images/camera_images/camera1.jpg" alt="Avatar" style="width:100%">
-			  <h3>Card 1</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
+			<div th:each="item : ${items}" class="column">
+				<div class="card">
+					<img class="card_image" th:src="@{/images/camera_images/{imageName}(imageName=${item.imageName})}" alt="Avatar" style="width:100%">
+					<h3>[[|${item.name}|]]</h3>
+					<p>[[|${item.description}|]]</p>
+					<p>[[|${item.price}|]] lv.</p>
+					<div class="favourites_image" title="Add to favourites">
+						<img th:if="${loggedInUser == null}" th:onclick="|AddToFavourites(${item.id}, ${loggedInUser)|" id="addToFavourites" class="edit_image" th:src="@{/images/favourites.jpg}">
+						<img th:if="${loggedInUser != null}" th:onclick="|AddToFavourites(${item.id}, ${loggedInUser.id})|" id="addToFavourites" class="edit_image" th:src="@{/images/favourites.jpg}">
 
-		  <div class="column">
-			<div class="card">
-				<img class="card_image" src="images/camera_images/camera2.jpg" alt="Avatar" style="width:100%">
-			  <h3>Card 2</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
+					</div>
+					<input class="button button_style" type="submit" value="AddToCart" name="AddToCart" onclick="window.location='/';"/> <br><br>
+				</div>
 			</div>
-		  </div>
-		  
-		  <div class="column">
-			<div class="card">
-				<img class="card_image" src="images/camera_images/camera3.jpg" alt="Avatar" style="width:100%">
-			  <h3>Card 3</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
-		  
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="img_avatar2.png" alt="Avatar" style="width:100%">
-			  <h3>Card 4</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
-		  
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="img_avatar2.png" alt="Avatar" style="width:100%">
-			  <h3>Card 1</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
-
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="img_avatar2.png" alt="Avatar" style="width:100%">
-			  <h3>Card 2</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
-		  
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="img_avatar2.png" alt="Avatar" style="width:100%">
-			  <h3>Card 3</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
-		  
-		  <div class="column">
-			<div class="card">
-			  <img class="card_image" src="img_avatar2.png" alt="Avatar" style="width:100%">
-			  <h3>Card 4</h3>
-			  <p>Some text</p>
-			  <p>Some text</p>
-			</div>
-		  </div>
 		</div>
+
+		<script th:inline="javascript">
+			const AddToFavourites = ( itemId, loggedInUser ) => {
+				if( loggedInUser ){
+					$.ajax({
+						type: 'GET',
+						url: "http://192.168.87.141:9779/AddToFavourites?id="+itemId,
+						success: function( response ){
+							if( response ){
+								alert('Added to favourites');
+							}
+							else{
+								alert( 'Could not add item to favourites' );
+							}
+						}
+					})
+				}
+				else{
+					alert( 'Please log in first' );
+				}
+			}
+		</script>
 	</body>
 </html>
