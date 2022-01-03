@@ -23,7 +23,6 @@
 					<th>Last Name</th>
 					<th>Username</th>
 					<th>Email Address</th>
-					<th>Cart Id</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -36,7 +35,6 @@
 					<td th:text="${user.lastName}"></td>
 					<td th:text="${user.username}"></td>
 					<td th:text="${user.emailAddress}"></td>
-					<td th:text="${user.cartId}"></td>
 					<td><a th:href="@{EditAdminUser?id={id}(id=${user.id})}"><img class="edit_image" th:src="@{/images/edit.png}"></a></td>
 					<td><a th:href="@{DeleteAdminUser?id={id}(id=${user.id})}"><img class="edit_image" th:src="@{/images/delete.png}"></a></td>
 				</tr>

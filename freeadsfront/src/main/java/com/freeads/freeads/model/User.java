@@ -22,7 +22,6 @@ public class User
 	private String emailAddress;
 	private String password;
 	private boolean authenticated;
-	private long cartId;
 	private long roleId;
 
 	public User() {};
@@ -42,7 +41,6 @@ public class User
 		this.username = username;
 		this.emailAddress = emailAddress;
 		this.authenticated = false;
-		this.cartId = -1;
 		this.roleId = -1;
 	}
 
@@ -70,9 +68,6 @@ public class User
 	public boolean getAuthenticated() { return this.authenticated; }
 	public void setAuthenticated( boolean authenticated ) { this.authenticated = authenticated; }
 	
-	public long getCartId() { return this.cartId; }
-	public void setCartId( long cartId ) { this.cartId = cartId; }
-
 	public long getRoleId() { return this.roleId; }
 	public void setRoleId( long roleId ) { this.roleId = roleId; }
 
@@ -123,7 +118,6 @@ public class User
 						  ", firstName:" + this.getFirstName() +
 						  ", lastName:" + this.getLastName() +
 						  ", authenticated" + this.getAuthenticated() + 
-						  ", cartId:" + this.getCartId() +
 						  ", roleId:" + this.getRoleId() +
 						  " ]"; 
 	}

@@ -2,7 +2,6 @@ package com.freeads.freeads.controller;
 
 import com.freeads.freeads.model.User;
 import com.freeads.freeads.service.IUserService;
-import com.freeads.freeads.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +19,6 @@ public class AdminsController
 {
 	@Autowired
 	private IUserService userService;
-
-	@Autowired
-	private ICartService cartService;
 
 	@GetMapping( "/AdminUsers" )
 	public String FindAdminUsers( Model model )
@@ -85,7 +81,6 @@ public class AdminsController
 	{
 		try
 		{
-			adminUser.setCartId( cartService.InsertCart() );
 			long adminUserId = userService.InsertAdminUser( adminUser );
 		}
 		catch( Exception exception ) 

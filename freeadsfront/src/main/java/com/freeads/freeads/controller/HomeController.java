@@ -3,7 +3,6 @@ package com.freeads.freeads.controller;
 import com.freeads.freeads.model.User;
 import com.freeads.freeads.model.Item;
 import com.freeads.freeads.service.IUserService;
-import com.freeads.freeads.service.ICartService;
 import com.freeads.freeads.service.IItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

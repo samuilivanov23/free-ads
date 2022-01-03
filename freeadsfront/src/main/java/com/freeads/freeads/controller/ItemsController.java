@@ -4,7 +4,6 @@ import com.freeads.freeads.model.User;
 import com.freeads.freeads.model.Item;
 import com.freeads.freeads.model.Category;
 import com.freeads.freeads.service.IUserService;
-import com.freeads.freeads.service.ICartService;
 import com.freeads.freeads.service.IItemService;
 import com.freeads.freeads.service.ICategoryService;
 import com.freeads.freeads.service.IFileService;
