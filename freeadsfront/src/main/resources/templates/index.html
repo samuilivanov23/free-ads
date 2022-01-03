@@ -32,13 +32,13 @@
 
 					<div>
 						<div class="favourites_image" style="float:right" title="Edit Item">
-							<img th:if="${loggedInUser == null}" th:onclick="|DeleteEditItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser}, 'EditItem')|" class="edit_image" th:src="@{/images/edit.png}">
-							<img th:if="${loggedInUser != null}" th:onclick="|DeleteEditItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser.id}, 'EditItem')|" class="edit_image" th:src="@{/images/edit.png}">
+							<img th:if="${loggedInUser == null}" th:onclick="|EditItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser}, 'EditItem')|" class="edit_image" th:src="@{/images/edit.png}">
+							<img th:if="${loggedInUser != null}" th:onclick="|EditItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser.id}, 'EditItem')|" class="edit_image" th:src="@{/images/edit.png}">
 						</div>
 						
 						<div class="favourites_image" style="float:right" title="Delete item">
-							<img th:if="${loggedInUser == null}" th:onclick="|DeleteEditItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser}, 'DeleteItem')|" class="edit_image" th:src="@{/images/delete.png}">
-							<img th:if="${loggedInUser != null}" th:onclick="|DeleteEditItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser.id}, 'DeleteItem' )|" class="edit_image" th:src="@{/images/delete.png}">
+							<img th:if="${loggedInUser == null}" th:onclick="|DeleteItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser}, 'DeleteItem')|" class="edit_image" th:src="@{/images/delete.png}">
+							<img th:if="${loggedInUser != null}" th:onclick="|DeleteItem(${item.id}, ${item.salesmanUserId}, ${loggedInUser.id}, 'DeleteItem' )|" class="edit_image" th:src="@{/images/delete.png}">
 						</div>
 					</div>
 					
@@ -89,7 +89,7 @@
 				}
 			}
 
-			const DeleteEditItem = ( itemId, itemSalesmanUserId, loggedInUserId, controllerMethod ) => {
+			const DeleteItem = ( itemId, itemSalesmanUserId, loggedInUserId, controllerMethod ) => {
 				if( loggedInUserId ){
 					if( loggedInUserId === itemSalesmanUserId ){
 						const endPoint = "http://192.168.87.141:9779/"+controllerMethod+"?id="+itemId;
@@ -98,17 +98,31 @@
 							url: endPoint,
 							success: function( response ){
 								if( response ){
-									alert( "Product add edited/deleted successfully" );
+									alert( "Product Ad has been deleted successfully" );
 								}
 								else{
-									alert( "Could not edit/delete Product Ad" );
+									alert( "Could not delete Product Ad" );
 								}
 								window.location = "/";
 							}
 						})
 					}
 					else{
-						alert( "Cannot edit or delete this Product Ad. It's owned by another customer" );
+						alert( "Cannot delete this Product Ad. It's owned by another customer" );
+					}
+				}
+				else{
+					alert( "Please log in first" );
+				}
+			}
+
+			const EditItem = ( itemId, itemSalesmanUserId, loggedInUserId, controllerMethod ) => {
+				if( loggedInUserId ){
+					if( loggedInUserId === itemSalesmanUserId ){
+						window.location="/"+controllerMethod+"?id="+itemId;
+					}
+					else{
+						alert( "Cannot edit this Product Ad. It's owned by another customer" );
 					}
 				}
 				else{

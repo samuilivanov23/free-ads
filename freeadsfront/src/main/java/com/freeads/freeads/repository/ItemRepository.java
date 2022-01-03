@@ -45,6 +45,34 @@ public class ItemRepository
 		return items;
 	}
 
+	public Item findById( long itemId )
+	{
+		Item item = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Connection dbConn = DataBaseManager.ConnectToDatabase2();
+		
+		try
+		{	
+			statement = dbConn.prepareStatement( "SELECT * FROM items as i WHERE i.id=? AND i.is_deleted=false AND i.is_deactivated=false" );	
+			statement.setLong( 1, itemId );
+			
+			result = statement.executeQuery();
+			item = mapResultToList( result ).get(0); //get first element of the list as it's only one item fetched
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			DataBaseManager.CloseConnection( dbConn, result, ( Statement ) statement );
+		}
+	
+		return item;
+
+	}
+
 	public List<Item> findAllFavouriteItems( long userId )
 	{
 		List<Item> items = null;
@@ -199,6 +227,50 @@ public class ItemRepository
 		}
 	}
 
+	public void editItem( Item item )
+	{
+		PreparedStatement statement = null;
+		Statement transactionStatement = null;
+		ResultSet result = null;
+		Connection dbConn = DataBaseManager.ConnectToDatabase2();
+		
+		try
+		{
+			transactionStatement = dbConn.createStatement();
+			transactionStatement.executeUpdate( "BEGIN" );
+
+			statement = dbConn.prepareStatement( "UPDATE items SET name=?, description=?, salesman_user_id=?, category_id=?, count=?, price=?, image_name=? WHERE id=? RETURNING id" );
+			statement.setString( 1, item.getName() );
+			statement.setString( 2, item.getDescription() );
+			statement.setLong( 3, item.getSalesmanUserId() );
+			statement.setLong( 4, item.getCategoryId() );
+			statement.setInt( 5, item.getCount() );
+			statement.setDouble( 6, item.getPrice() );
+			statement.setString( 7, item.getImageName() );
+			statement.setLong( 8, item.getId() );
+			
+			result = statement.executeQuery();
+			result.next();
+
+			if( result.getLong( 1 ) == item.getId() )
+			{
+				transactionStatement.executeUpdate( "COMMIT" );
+			}
+			else
+			{
+				transactionStatement.executeUpdate( "ROLLBACK" );
+			}
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			DataBaseManager.CloseConnection( dbConn, result, ( Statement ) statement, transactionStatement );
+		}
+	}
+
 	public boolean deleteOrDeactivateItem( long itemId, String deleteOrDeactivateColumn )
 	{
 		boolean isItemDeleted = false;
@@ -239,11 +311,6 @@ public class ItemRepository
 		}
 
 		return isItemDeleted;
-	}
-
-	public boolean editItem( Item item )
-	{
-		return false;
 	}
 
 	public boolean addItemToCart( String userFirstName, String userLastName, long userId, long itemId )

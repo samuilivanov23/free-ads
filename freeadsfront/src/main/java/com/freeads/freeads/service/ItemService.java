@@ -16,6 +16,11 @@ public class ItemService implements IItemService
 		return itemRepository.findAllItems();
 	}
 
+	public Item FindById( long itemId )
+	{
+		return itemRepository.findById( itemId );
+	}
+
 	public List<Item> FindAllFavouriteItems( long userId )
 	{
 		return itemRepository.findAllFavouriteItems( userId );
@@ -41,9 +46,9 @@ public class ItemService implements IItemService
 		return itemRepository.deleteOrDeactivateItem( itemId, "is_deleted" );
 	}
 
-	public boolean EditItem( Item item )
+	public void EditItem( Item item )
 	{
-		return itemRepository.editItem( item );
+		itemRepository.editItem( item );
 	}
 
 	public boolean DeactivateItem( long itemId )

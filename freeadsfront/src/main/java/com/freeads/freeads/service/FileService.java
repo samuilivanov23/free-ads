@@ -25,7 +25,10 @@ public class FileService implements IFileService
 				orgName = multipartFile.getOriginalFilename();
 				filePath = realPathtoUploads + orgName;
 				File dest = new File( filePath );
-				multipartFile.transferTo( dest );
+				if( !dest.exists() )
+				{
+					multipartFile.transferTo( dest );
+				}
 			}
 			catch( IOException ioException )
 			{

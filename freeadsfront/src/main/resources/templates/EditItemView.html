@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>edit item</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    <body>
+		<h2 class="center_text">Edit item: [[|${item.name}|]]</h2>
+
+		<form action="#" th:action="@{/EditItem}" th:object="${item}" method="post" enctype="multipart/form-data">
+			<div class="autocomplete" style="width:300px">
+				<input type="hidden" id="id" name="id" th:field="${item.id}"><br><br>
+            </div>
+			
+			<div class="autocomplete" style="width:300px">
+                <label for="name">Name</label><br>
+				<input type="text" id="name" name="name" th:field="${item.name}"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+                <label for="description">Description</label><br>
+				<input type="text" id="description" name="description" th:field="${item.description}"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+				<label for="categoryId">Choose a category:</label><br>
+				<select id="categoryId" name="categoryId">
+					<option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}" th:select="${category.id=item.categoryId}"></option>
+				</select><br><br>
+			</div>
+	
+			<div class="autocomplete" style="width:300px">
+				<label for="count">Quantity</label><br>
+				<input type="number" id="count" name="count" min="1" th:field="${item.count}"><br><br>
+			</div>
+				
+			<div class="autocomplete" style="width:300px">
+                <label for="price">Price</label><br>
+				<input type="text" id="price" name="price"  th:field="${item.price}"><br><br>
+            </div>
+
+			<div class="autocomplete" style="width:300px">
+				<label>Upload image(png/jpeg): </label><br>
+				<input type="file" name="image" accept="image/png, image/jpeg"><br><br>
+			</div>
+
+			<input class="button button_style" type="submit" value="Submit" name="Submit"/> <br><br>
+		 	<input class="button button_style" type="reset" value="Reset" name="Reset"> <br><br>
+    	</form>
+	</body>
+</html>
