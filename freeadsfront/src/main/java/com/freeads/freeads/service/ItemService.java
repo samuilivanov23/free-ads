@@ -16,9 +16,24 @@ public class ItemService implements IItemService
 		return itemRepository.findAllItems();
 	}
 
+	public Item FindById( long itemId )
+	{
+		return itemRepository.findById( itemId );
+	}
+
 	public List<Item> FindAllFavouriteItems( long userId )
 	{
 		return itemRepository.findAllFavouriteItems( userId );
+	}
+
+	public List<Item> FindAllActiveItems()
+	{
+		return itemRepository.findAllActiveItems();
+	}
+
+	public List<Item> FindAllActiveItemsFiltered( String startDate, String endDate )
+	{
+		return itemRepository.findAllActiveItems( startDate, endDate );
 	}
 
 	public boolean AddToFavourites( long userId, long itemId )
@@ -41,13 +56,18 @@ public class ItemService implements IItemService
 		return itemRepository.deleteOrDeactivateItem( itemId, "is_deleted" );
 	}
 
-	public boolean EditItem( Item item )
+	public void EditItem( Item item )
 	{
-		return itemRepository.editItem( item );
+		itemRepository.editItem( item );
 	}
 
 	public boolean DeactivateItem( long itemId )
 	{
 		return itemRepository.deleteOrDeactivateItem( itemId, "is_deactivated" );
+	}
+
+	public boolean AddItemToCart( String userFirstName, String userLastName, long userId, long itemId )
+	{
+		return itemRepository.addItemToCart( userFirstName, userLastName, userId, itemId );
 	}
 }

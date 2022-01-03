@@ -46,8 +46,7 @@ public class UserRepository
 				tmpUser.setEmailAddress( result.getString( 6 ) );
 				tmpUser.setPassword( result.getString( 7 ) );
 				tmpUser.setAuthenticated( result.getBoolean( 8 ) );
-				tmpUser.setCartId( result.getLong( 9 ) );
-				tmpUser.setRoleId( result.getLong( 10 ) );
+				tmpUser.setRoleId( result.getLong( 9 ) );
 
 				adminUsers.add( tmpUser );
 			}
@@ -88,8 +87,7 @@ public class UserRepository
 			adminUser.setEmailAddress( result.getString( 6 ) );
 			adminUser.setPassword( result.getString( 7 ) );
 			adminUser.setAuthenticated( result.getBoolean( 8 ) );
-			adminUser.setCartId( result.getLong( 9 ) );
-			adminUser.setRoleId( result.getLong( 10 ) );
+			adminUser.setRoleId( result.getLong( 9 ) );
 
 		}
 		catch( Exception exception )
@@ -166,13 +164,12 @@ public class UserRepository
 			transactionStatement = dbConn.createStatement();
 			transactionStatement.executeUpdate( "BEGIN" );
 
-			statement = dbConn.prepareStatement( "INSERT INTO users(first_name, last_name, username, email_address, password, cart_id) values(?, ?, ?, ?, ?, ?) RETURNING id" );
+			statement = dbConn.prepareStatement( "INSERT INTO users(first_name, last_name, username, email_address, password) values(?, ?, ?, ?, ?) RETURNING id" );
 			statement.setString( 1, user.getFirstName() );
 			statement.setString( 2, user.getLastName() );
 			statement.setString( 3, user.getUsername() );
 			statement.setString( 4, user.getEmailAddress() );
 			statement.setString( 5, UserService.GetEncryptedPassword( user.getPassword() ) );
-			statement.setLong( 6, user.getCartId() );
 			
 			result = statement.executeQuery();	
 			result.next();
@@ -219,16 +216,15 @@ public class UserRepository
 			if( result.next() )
 			{
 				loggedInUser = new User();
-				loggedInUser.setId( result.getLong(1) );
-				loggedInUser.setInsertedAt( result.getString(2) );
-				loggedInUser.setFirstName( result.getString(3) );
-				loggedInUser.setLastName( result.getString(4) );
-				loggedInUser.setUsername( result.getString(5) );
-				loggedInUser.setEmailAddress( result.getString(6) ); //potentially removed
-				loggedInUser.setPassword( result.getString(7) );
-				loggedInUser.setAuthenticated( result.getBoolean(8) );
-				loggedInUser.setCartId( result.getLong(9) );
-				loggedInUser.setRoleId( result.getLong(10) );
+				loggedInUser.setId( result.getLong( 1 ) );
+				loggedInUser.setInsertedAt( result.getString( 2 ) );
+				loggedInUser.setFirstName( result.getString( 3 ) );
+				loggedInUser.setLastName( result.getString( 4 ) );
+				loggedInUser.setUsername( result.getString( 5 ) );
+				loggedInUser.setEmailAddress( result.getString( 6 ) ); //potentially removed
+				loggedInUser.setPassword( result.getString( 7 ) );
+				loggedInUser.setAuthenticated( result.getBoolean( 8 ) );
+				loggedInUser.setRoleId( result.getLong( 9 ) );
 			}
 		}
 		catch( Exception exception )

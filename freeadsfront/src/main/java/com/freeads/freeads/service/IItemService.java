@@ -7,10 +7,14 @@ public interface IItemService
 {
 	List<Item> FindAllItems();
 	List<Item> FindAllFavouriteItems( long userId );
+	List<Item> FindAllActiveItems( );
+	List<Item> FindAllActiveItemsFiltered( String startDate, String endDate );
+	Item FindById( long userId );
 	boolean AddToFavourites( long userId, long itemId );
 	boolean RemoveFromFavourites( long userId, long itemId );
 	public void InsertItem( Item item );
+	public void EditItem( Item item );
 	public boolean DeleteItem( long itemId );
-	public boolean EditItem( Item item );
 	public boolean DeactivateItem( long itemId );
+	public boolean AddItemToCart( String userFirstName, String userLastName, long userId, long itemId );
 }

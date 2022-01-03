@@ -2,7 +2,6 @@ package com.freeads.freeads.controller;
 
 import com.freeads.freeads.model.User;
 import com.freeads.freeads.service.IUserService;
-import com.freeads.freeads.service.ICartService;
 import com.freeads.freeads.service.IEmailService;
 import com.freeads.freeads.controller.HomeController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,60 +23,7 @@ public class UsersController
 	private IUserService userService;
 
 	@Autowired
-	private ICartService cartService;
-	
-	@Autowired
 	private IEmailService emailService;
-
-	/*@GetMapping( "/AdminUsers" )
-	public String FindAdminUsers( Model model )
-	{
-		var adminUsers = ( List<User> ) userService.FindAll();
-		model.addAttribute( "users", adminUsers );
-		
-		return "ShowAdminUsersView";
-	}*/
-
-	/*@GetMapping( "/EditAdminUser" )
-	public String EditAdminUser( @RequestParam long id, Model model )
-	{
-		try
-		{
-			User adminUser = ( User ) userService.FindAdminById( id );
-			model.addAttribute( "user", adminUser );
-		}
-		catch(Exception exception)
-		{
-			exception.printStackTrace();
-			return "redirect:AdminUsers";
-		}
-
-		return "EditAdminUserView";
-	}
-
-	@PostMapping( "/EditAdminUser" )
-	public String EditAdminUserSubmission( @ModelAttribute User adminUser )
-	{
-		try
-		{
-			userService.UpdateAdminUser( adminUser );
-		}
-		catch( Exception exception ) { exception.printStackTrace(); }
-
-		return "redirect:AdminUsers";
-	}*/
-
-	/*@GetMapping( "/DeleteAdminUser" )
-	public String DeleteAdminUser( @RequestParam long id )
-	{
-		try
-		{
-			userService.DeleteAdminUser( id );
-		}
-		catch( Exception exception ) { exception.printStackTrace(); }
-
-		return "redirect:AdminUsers";
-	}*/
 
 	@GetMapping( "/RegisterUser" )
 	public String RegisterUser()
@@ -92,7 +38,6 @@ public class UsersController
 		boolean isEmailSentSuccessfully = false;
 		try
 		{
-			user.setCartId( cartService.InsertCart() );
 			isEmailSentSuccessfully = userService.RegisterUser( user );
 		}
 		catch( Exception exception ) 

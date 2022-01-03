@@ -11,7 +11,7 @@
 		<ul th:fragment="navbar">
 			<li><a th:href="@{/}">Home</a></li>
 			<li><a th:if="${loggedInUser != null}" th:href="@{/AddItem}">New product Ad</a></li>
-			<li><a href="#contact">Contact</a></li>
+			<li><a th:if="${loggedInUser != null}" th:href="@{/ActiveItemAnalysis}">Item analysis</a></li>
 			<li th:if="${loggedInUser == null}" style="float:right"><a th:href="@{RegisterUser}">Sing up</a></li>
 			<li th:if="${loggedInUser == null}" style="float:right"><a th:href="@{SignInUser}">Sign in</a></li>
 			<li th:if="${loggedInUser != null}" style="float:right"><a th:href="@{LogoutUser}">Logout</a></li>
@@ -19,8 +19,6 @@
 				<a class="dropbtn"> [[|${loggedInUser.firstName} ${loggedInUser.lastName}|]] </a>
 				<div class="dropdown-content">
 					<a th:href="@{Favourites}">Favourites</a>
-					<a href="#">Link 1</a>
-					<a href="#">Link 2</a>
 				</div>
 		  	</li>
 		</ul>

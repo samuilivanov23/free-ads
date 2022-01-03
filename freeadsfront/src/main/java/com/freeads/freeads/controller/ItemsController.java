@@ -4,7 +4,6 @@ import com.freeads.freeads.model.User;
 import com.freeads.freeads.model.Item;
 import com.freeads.freeads.model.Category;
 import com.freeads.freeads.service.IUserService;
-import com.freeads.freeads.service.ICartService;
 import com.freeads.freeads.service.IItemService;
 import com.freeads.freeads.service.ICategoryService;
 import com.freeads.freeads.service.IFileService;
@@ -111,7 +110,6 @@ public class ItemsController
 	}
 
 	@PostMapping( "/AddItem" )
-	//@ResponseBody
 	public String AddItemSubmission( @ModelAttribute Item item, @RequestParam("image") MultipartFile multipartFile )
 	{
 		try
@@ -164,19 +162,96 @@ public class ItemsController
 	}
 
 	@GetMapping( "/EditItem" )
-	@ResponseBody
-	public boolean EditItem( @RequestParam( name = "id" ) long itemId )
+	public String EditItem( @RequestParam( name = "id" ) long itemId, Model model )
 	{
-		boolean isItemEdited = false;
 		try
 		{
-			//isItemEdited = itemService.EditItem( itemId );
+			Item item = itemService.FindById( itemId );
+			model.addAttribute( "item", item );
+
+			List<Category> categories = categoryService.FindAll();
+			model.addAttribute( "categories", categories );
 		}
 		catch( Exception exception )
 		{
 			exception.printStackTrace();
 		}
 		
-		return isItemEdited;
+		return "EditItemView";
+	}
+
+	@PostMapping( "/EditItem" )
+	public String EditItemSubmission( @ModelAttribute Item item, @RequestParam("image") MultipartFile multipartFile )
+	{
+		try
+		{
+			item.setSalesmanUserId( HomeController.loggedInUser.getId() );
+			item.setImageName( StringUtils.cleanPath( multipartFile.getOriginalFilename() ) );
+			
+			fileService.SaveFile( multipartFile );
+			itemService.EditItem( item );
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+		
+		return "redirect:";
+	}
+
+	@GetMapping( "/AddItemToCart" )
+	@ResponseBody
+	public boolean AddItemToCart( @RequestParam( name = "id" ) long itemId )
+	{
+		boolean isItemAddedToCart = false;
+		try
+		{
+			isItemAddedToCart = itemService.AddItemToCart( HomeController.loggedInUser.getFirstName(), 
+														   HomeController.loggedInUser.getLastName(),
+														   HomeController.loggedInUser.getId(),
+														   itemId );
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+
+		return isItemAddedToCart;
+	}
+
+	@GetMapping( "/ActiveItemAnalysis" )
+	public String ItemAnalysis( Model model )
+	{
+		try
+		{
+			List<Item> activeItems = itemService.FindAllActiveItems( );
+			model.addAttribute( "items", activeItems );
+			model.addAttribute( "loggedInUser", HomeController.loggedInUser );
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+			return "redirect:";
+		}
+		
+		return "ActiveItemsAnalysisView";
+	}
+
+	@GetMapping( "ActiveItemsFilter" )
+	public String ActiveItemsFilter( @RequestParam( name = "startDate" ) String startDate, @RequestParam( name = "endDate" ) String endDate, Model model )
+	{
+		try
+		{
+			List<Item> activeItemsFiltered = itemService.FindAllActiveItemsFiltered( startDate, endDate );
+			model.addAttribute( "items", activeItemsFiltered );
+			model.addAttribute( "loggedInUser", HomeController.loggedInUser );
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+			return "redirect:";
+		}
+
+		return "ActiveItemsAnalysisView";
 	}
 }
