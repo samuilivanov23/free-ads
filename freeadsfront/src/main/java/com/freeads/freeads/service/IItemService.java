@@ -7,6 +7,8 @@ public interface IItemService
 {
 	List<Item> FindAllItems();
 	List<Item> FindAllFavouriteItems( long userId );
+	List<Item> FindAllActiveItems( );
+	List<Item> FindAllActiveItemsFiltered( String startDate, String endDate );
 	Item FindById( long userId );
 	boolean AddToFavourites( long userId, long itemId );
 	boolean RemoveFromFavourites( long userId, long itemId );

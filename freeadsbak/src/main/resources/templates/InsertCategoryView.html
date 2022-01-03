@@ -3,11 +3,14 @@
     <head>
         <title>Create category</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/nav.css}">
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
     
     <body>
+		<div th:replace="fragments/navbar :: navbar"></div>
+
 		<h2 class="center_text">Create Category</h2>
 
 		<form action="#" id="InsertCategoryForm" th:action="@{/InsertCategory}" th:object="${category}" method="post">			

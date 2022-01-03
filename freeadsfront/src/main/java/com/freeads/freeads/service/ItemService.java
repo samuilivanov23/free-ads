@@ -26,6 +26,16 @@ public class ItemService implements IItemService
 		return itemRepository.findAllFavouriteItems( userId );
 	}
 
+	public List<Item> FindAllActiveItems()
+	{
+		return itemRepository.findAllActiveItems();
+	}
+
+	public List<Item> FindAllActiveItemsFiltered( String startDate, String endDate )
+	{
+		return itemRepository.findAllActiveItems( startDate, endDate );
+	}
+
 	public boolean AddToFavourites( long userId, long itemId )
 	{
 		return itemRepository.addToFavourites( userId, itemId );

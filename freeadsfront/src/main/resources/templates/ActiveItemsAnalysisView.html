@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>active product ads analysis</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/styles/nav.css}">
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+		<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+	</head>
+    
+    <body>
+		<div th:replace="fragments/navbar :: navbar"></div>
+
+        <h2 class="center_text">List of active product ads</h2>
+
+		<a th:href="@{InsertAdminUser}">
+			<button class="button button_style" name="CreateAdminUser"/> Create Admin User </button>
+		</a>
+		
+		<br><br>
+		<div>
+			<p>
+				<label for="amount">Date range:</label>
+				<input type="text" id="amount" style="border: 0; background-color:#ffffff; font-weight: bold;" size="100" />
+			</p>
+			<div id="slider-range"></div>
+		</div><br><br>
+
+		<a>
+			<button th:onclick="|SubmitSliderData()|" class="button button_style" name="CreateAdminUser"/> Create Admin User </button>
+		</a><br>
+
+        <table id="customers">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Category</th>
+					<th>Count</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="item : ${items}">
+					<td th:text="${item.id}"></td>
+					<td th:text="${item.name}"></td>
+					<td th:text="${item.description}"></td>
+					<td th:text="${item.categoryName}"></td>
+					<td th:text="${item.count}"></td>
+					<td th:text="${item.price}"></td>
+				</tr>
+			</tbody>
+        </table>
+
+		<script th:inline="javascript">
+			$(function () {
+				$("#slider-range").slider({
+					range: true,
+					min: new Date('2021.01.01').getTime() / 1000,
+					max: new Date('2025.01.01').getTime() / 1000,
+					step: 86400,
+					values: [new Date('2021.01.01').getTime() / 1000, new Date('2025.01.01').getTime() / 1000],
+					slide: function (event, ui) {
+						$("#amount").val((new Date(ui.values[0] * 1000).toDateString()) + " - " + (new Date(ui.values[1] * 1000)).toDateString());
+					}
+				});
+				$("#amount").val((new Date($("#slider-range").slider("values", 0) * 1000).toDateString()) +
+					" - " + (new Date($("#slider-range").slider("values", 1) * 1000)).toDateString());
+			});
+
+			const SubmitSliderData = () => {
+				let startDate = new Date($("#slider-range").slider("values", 0) * 1000);
+				let endDate = new Date($("#slider-range").slider("values", 1) * 1000)		
+				var startDateStr =
+					startDate.getFullYear() + "-" +
+					("00" + (startDate.getMonth() + 1)).slice(-2) + "-" +
+				 	("00" + startDate.getDate()).slice(-2) + " " +
+				 	("00" + startDate.getHours()).slice(-2) + ":" +
+				 	("00" + startDate.getMinutes()).slice(-2) + ":" +
+				 	("00" + startDate.getSeconds()).slice(-2);
+				
+				var endDateStr =
+					endDate.getFullYear() + "-" +
+					("00" + (endDate.getMonth() + 1)).slice(-2) + "-" +
+				 	("00" + endDate.getDate()).slice(-2) + " " +
+				 	("00" + endDate.getHours()).slice(-2) + ":" +
+				 	("00" + endDate.getMinutes()).slice(-2) + ":" +
+				 	("00" + endDate.getSeconds()).slice(-2);
+				
+				window.location = "/ActiveItemsFilter?startDate="+startDateStr+"&&endDate="+endDateStr;
+			}
+		</script>
+	</body>
+</html>

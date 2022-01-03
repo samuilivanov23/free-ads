@@ -218,4 +218,40 @@ public class ItemsController
 
 		return isItemAddedToCart;
 	}
+
+	@GetMapping( "/ActiveItemAnalysis" )
+	public String ItemAnalysis( Model model )
+	{
+		try
+		{
+			List<Item> activeItems = itemService.FindAllActiveItems( );
+			model.addAttribute( "items", activeItems );
+			model.addAttribute( "loggedInUser", HomeController.loggedInUser );
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+			return "redirect:";
+		}
+		
+		return "ActiveItemsAnalysisView";
+	}
+
+	@GetMapping( "ActiveItemsFilter" )
+	public String ActiveItemsFilter( @RequestParam( name = "startDate" ) String startDate, @RequestParam( name = "endDate" ) String endDate, Model model )
+	{
+		try
+		{
+			List<Item> activeItemsFiltered = itemService.FindAllActiveItemsFiltered( startDate, endDate );
+			model.addAttribute( "items", activeItemsFiltered );
+			model.addAttribute( "loggedInUser", HomeController.loggedInUser );
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+			return "redirect:";
+		}
+
+		return "ActiveItemsAnalysisView";
+	}
 }
