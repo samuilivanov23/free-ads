@@ -42,7 +42,7 @@
 						</div>
 					</div>
 					
-					<input th:if="${loggedInUser} != null AND ${loggedInUser.id} == ${item.salesmanUserId}" class="button button_style" type="submit" value="Add To Cart" name="AddToCart" th:onclick="|AddToCart(${item.id})|"/> <br><br>
+					<input th:if="${loggedInUser} != null" class="button button_style" type="submit" value="Add To Cart" name="AddToCart" th:onclick="|AddItemToCart(${item.id})|"/> <br><br>
 					<input th:if="${loggedInUser} != null AND ${loggedInUser.id} == ${item.salesmanUserId}" class="button button_style" type="submit" value="Deactivate Ad" name="DeactivateAd" th:onclick="|DeactivateItem(${item.id})|"/> <br><br>
 				</div>
 			</div>
@@ -123,12 +123,28 @@
 					url: endPoint,
 					success: function( response ){
 						if( response ){
-							alert( "Product add edited/deleted successfully" );
+							alert( "Product deactivate successfully" );
 						}
 						else{
 							alert( "Could not deactivate Product Ad" );
 						}
 						window.location = "/";
+					}
+				})
+			}
+
+			const AddItemToCart = ( itemId ) => {
+				const endPoint = "http://192.168.87.141:9779/AddItemToCart"+"?id="+itemId;
+				$.ajax({
+					type: 'GET',
+					url: endPoint,
+					success: function( response ){
+						if( response ){
+							alert( "Product add added to cart successfully" );
+						}
+						else{
+							alert( "Could add product to cart" );
+						}
 					}
 				})
 			}

@@ -178,4 +178,24 @@ public class ItemsController
 		
 		return isItemEdited;
 	}
+
+	@GetMapping( "/AddItemToCart" )
+	@ResponseBody
+	public boolean AddItemToCart( @RequestParam( name = "id" ) long itemId )
+	{
+		boolean isItemAddedToCart = false;
+		try
+		{
+			isItemAddedToCart = itemService.AddItemToCart( HomeController.loggedInUser.getFirstName(), 
+														   HomeController.loggedInUser.getLastName(),
+														   HomeController.loggedInUser.getId(),
+														   itemId );
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+
+		return isItemAddedToCart;
+	}
 }

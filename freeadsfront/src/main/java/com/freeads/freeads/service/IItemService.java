@@ -13,4 +13,5 @@ public interface IItemService
 	public boolean DeleteItem( long itemId );
 	public boolean EditItem( Item item );
 	public boolean DeactivateItem( long itemId );
+	public boolean AddItemToCart( String userFirstName, String userLastName, long userId, long itemId );
 }

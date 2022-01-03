@@ -1,6 +1,7 @@
 package com.freeads.freeads.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -10,10 +11,15 @@ import com.freeads.freeads.DataBaseManager;
 import java.util.List;
 import java.util.ArrayList;
 import com.freeads.freeads.model.Item;
+import com.freeads.freeads.service.IEmailService;
 
 @Repository
 public class ItemRepository 
 {
+
+	@Autowired
+	private IEmailService emailService;
+
 	public List<Item> findAllItems()
 	{
 		List<Item> items = null;
@@ -238,6 +244,57 @@ public class ItemRepository
 	public boolean editItem( Item item )
 	{
 		return false;
+	}
+
+	public boolean addItemToCart( String userFirstName, String userLastName, long userId, long itemId )
+	{
+		boolean isItemAddedToCart = false;
+		PreparedStatement statement = null;
+		Statement transactionStatement = null;
+		ResultSet result = null;
+		Connection dbConn = DataBaseManager.ConnectToDatabase2();
+		
+		try
+		{
+			transactionStatement = dbConn.createStatement();
+			transactionStatement.executeUpdate( "BEGIN" );
+			
+			statement = dbConn.prepareStatement( "INSERT INTO carts_items (user_id, item_id) VALUES(?, ?) RETURNING user_id" );
+			statement.setLong( 1, userId );
+			statement.setLong( 2, itemId );
+			
+			result = statement.executeQuery();	
+			result.next();
+			
+			if( result.getLong( 1 ) == userId )
+			{
+				isItemAddedToCart = true;
+				transactionStatement.executeUpdate( "COMMIT" );
+			}
+			else
+			{
+				transactionStatement.executeUpdate( "ROLLBACK" );
+			}
+
+			try
+			{
+				emailService.SendProductStatusNotifMail( userFirstName, userLastName, itemId );
+			}
+			catch( Exception emailException )
+			{
+				emailException.printStackTrace();
+			}
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			DataBaseManager.CloseConnection( dbConn, result, ( Statement ) statement, transactionStatement );
+		}
+
+		return isItemAddedToCart;
 	}
 
 	private List<Item> mapResultToList( ResultSet result ) throws SQLException

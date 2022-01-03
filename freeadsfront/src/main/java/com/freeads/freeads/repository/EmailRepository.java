@@ -90,4 +90,33 @@ public class EmailRepository
 
 		return isVerificationSuccessfull;
 	}
+
+	public String[] getItemOwnerEmailAddress( long itemId )
+	{
+		String[] itemOwnerDetails = null;
+		PreparedStatement statement = null;
+		Statement transactionStatement = null;
+		ResultSet result = null;
+		Connection dbConn = DataBaseManager.ConnectToDatabase2();
+		
+		try
+		{
+			statement = dbConn.prepareStatement( "SELECT u.email_address, u.first_name, u.last_name, i.name FROM items as i JOIN users as u ON i.salesman_user_id=u.id WHERE i.id=? AND i.is_deleted=false AND i.is_deactivated=false" );
+			statement.setLong( 1, itemId );
+
+			result = statement.executeQuery();
+			result.next();
+			itemOwnerDetails = new String[4];
+			itemOwnerDetails[0] = result.getString( 1 );
+			itemOwnerDetails[1] = result.getString( 2 );
+			itemOwnerDetails[2] = result.getString( 3 );
+			itemOwnerDetails[3] = result.getString( 4 );
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+		
+		return itemOwnerDetails;
+	}
 }	

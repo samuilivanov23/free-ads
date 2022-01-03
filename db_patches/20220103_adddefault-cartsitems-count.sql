@@ -1,0 +1,1 @@
+ALTER TABLE carts_items ALTER COLUMN count SET DEFAULT 1;

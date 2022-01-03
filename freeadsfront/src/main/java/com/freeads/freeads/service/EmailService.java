@@ -65,4 +65,39 @@ public class EmailService implements IEmailService
 	{
 		return emailRepository.verifyEmailAddress( token );
 	}
+
+	public void SendProductStatusNotifMail( String userFirstName, String userLastName, long itemId  )
+	{
+		String[] itemOwnerDetails = emailRepository.getItemOwnerEmailAddress( itemId );
+		String itemOwnerMailAddress = itemOwnerDetails[0];
+		String itemOwnerFirstName = itemOwnerDetails[1];
+		String itemOwnerLastName = itemOwnerDetails[2];
+		String itemName = itemOwnerDetails[3];
+
+		try
+		{
+			MimeMessage message = javaMailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);  // true = multipart message
+			helper.setTo( itemOwnerMailAddress );
+			helper.setSubject( "Product Ad Status Notification" );
+			
+			String email_content = "<html>\n" +
+					"<body>\n" +
+						"<p>Hi, " + itemOwnerFirstName + " " + itemOwnerLastName + ".<br>\n" +
+						"Our customer " + userFirstName + " " + userLastName + " has added your product: " + itemName + " to his favourites<br>\n" +
+						"</p>\n" +
+					"</body>\n" +
+				"</html>";
+
+			// default = text/plain
+			// true = text/html
+			helper.setText( email_content, true );
+			javaMailSender.send( message );
+
+		}
+		catch( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+	}
 }

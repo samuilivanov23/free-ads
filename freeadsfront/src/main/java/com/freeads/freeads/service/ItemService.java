@@ -50,4 +50,9 @@ public class ItemService implements IItemService
 	{
 		return itemRepository.deleteOrDeactivateItem( itemId, "is_deactivated" );
 	}
+
+	public boolean AddItemToCart( String userFirstName, String userLastName, long userId, long itemId )
+	{
+		return itemRepository.addItemToCart( userFirstName, userLastName, userId, itemId );
+	}
 }
