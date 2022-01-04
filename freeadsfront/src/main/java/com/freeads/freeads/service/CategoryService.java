@@ -24,16 +24,19 @@ public class CategoryService implements ICategoryService
 		return categoryRepository.findCategoryById( id );
 	}
 
+	@Override
 	public void UpdateCategory( Category category )
 	{
 		categoryRepository.updateCategory( category );
 	}
 
+	@Override
 	public void DeleteCategory( long id )
 	{
 		categoryRepository.deleteCategory( id );
 	}
 
+	@Override
 	public long InsertCategory( Category category )
 	{
 		return categoryRepository.insertCategory( category );

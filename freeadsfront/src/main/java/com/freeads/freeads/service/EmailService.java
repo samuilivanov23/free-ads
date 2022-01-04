@@ -61,11 +61,13 @@ public class EmailService implements IEmailService
 		}
 	}
 
+	@Override
 	public boolean VerifyEmailAddress( String token )
 	{
 		return emailRepository.verifyEmailAddress( token );
 	}
 
+	@Override
 	public void SendProductStatusNotifMail( String userFirstName, String userLastName, long itemId  )
 	{
 		String[] itemOwnerDetails = emailRepository.getItemOwnerEmailAddress( itemId );
