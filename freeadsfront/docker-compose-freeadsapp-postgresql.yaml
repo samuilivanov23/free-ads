@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  freeadsapp-postgresql:
+    container_name: freeadsapp-postgresql
+    image: freeads_postgres13:1.0
+    ports:
+     - 5432:5432
+    env_file:
+     - postgresql.env
+    volumes:
+     - postgresql-data:/var/lib/postgresql
+     - postgresql-logs:/var/log/postgresql
+    networks:
+     - freeadsapp_local_net
+
+volumes:
+  postgresql-data:
+    driver: local
+  postgresql-logs:
+    driver: local
+  postgresql-config:
+    driver: local
+
+networks:
+  freeadsapp_local_net:
+    driver: bridge

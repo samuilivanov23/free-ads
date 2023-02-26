@@ -1,0 +1,24 @@
+version: '3.1'
+
+services: 
+  freeadsapp-app:
+    container_name: freeadsapp-app
+    image: freeadsapp:1.0
+    ports:
+     - 9779:9779
+    env_file: 
+     - freeadsapp.env
+    networks:
+     - freeadsapp_local_net
+
+volumes:
+  postgresql-data:
+    driver: local
+  postgresql-logs:
+    driver: local
+  postgresql-config:
+    driver: local
+
+networks:
+  freeadsapp_local_net:
+    driver: bridge

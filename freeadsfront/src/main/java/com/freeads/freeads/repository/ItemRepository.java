@@ -15,7 +15,7 @@ import com.freeads.freeads.service.IEmailService;
 
 @Repository
 public class ItemRepository 
-5
+{
 	@Autowired
 	private IEmailService emailService;
 
