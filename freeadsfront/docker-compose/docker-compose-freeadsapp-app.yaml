@@ -3,11 +3,11 @@ version: '3.1'
 services: 
   freeadsapp-app:
     container_name: freeadsapp-app
-    image: freeadsapp:1.0
+    image: samuilivanov23/freeadsapp:latest
     ports:
      - 9779:9779
     env_file: 
-     - freeadsapp.env
+     - /usr/share/seccams/docker-artifacts/docker-envs/freeadsapp.env
     networks:
      - freeadsapp_local_net
 

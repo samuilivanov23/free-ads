@@ -3,11 +3,11 @@ version: '3.1'
 services:
   freeadsapp-postgresql:
     container_name: freeadsapp-postgresql
-    image: freeads_postgres13:1.0
+    image: samuilivanov23/freeads_postgres13:latest
     ports:
      - 5432:5432
     env_file:
-     - postgresql.env
+     - /usr/share/seccams/docker-artifacts/docker-envs/postgresql.env
     volumes:
      - postgresql-data:/var/lib/postgresql
      - postgresql-logs:/var/log/postgresql
@@ -18,8 +18,6 @@ volumes:
   postgresql-data:
     driver: local
   postgresql-logs:
-    driver: local
-  postgresql-config:
     driver: local
 
 networks:
