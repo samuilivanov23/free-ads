@@ -16,6 +16,7 @@ public class FreeAdsApplication
 		SpringApplication.run( FreeAdsApplication.class, args );
 	}
 
+
 	//@Bean
 	//public CommandLineRunner commandLineRunner( ApplicationContext ctx ) 
 	//{
