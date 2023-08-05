@@ -4,8 +4,7 @@
 # Swap files
 *.swp
 
-# properties files
-*.properties
+# properties files *.properties
 
 # Log file
 *.log
