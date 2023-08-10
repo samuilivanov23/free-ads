@@ -3,7 +3,7 @@ version: '3.1'
 services: 
   freeadsapp-app:
     container_name: freeadsapp-app
-    image: freeadsapp:v1
+    image: samuilivanov23/seccamsapp:latest
     ports:
      - 9779:9779
     env_file: 
