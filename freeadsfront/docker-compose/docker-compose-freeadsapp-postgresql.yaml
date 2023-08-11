@@ -7,7 +7,7 @@ services:
     ports:
      - 5432:5432
     env_file:
-     - /usr/share/seccams/docker-envs/postgresql.env
+     - /usr/share/seccams/docker-artifacts/docker-envs/postgresql.env
     volumes:
      - postgresql-data:/var/lib/postgresql
      - postgresql-logs:/var/log/postgresql
